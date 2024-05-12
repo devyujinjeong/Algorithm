@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -7,20 +6,22 @@ public class Main {
 		
 		int n = sc.nextInt();
 		
-		ArrayList<Integer> length = new ArrayList<Integer>();
-		ArrayList<Integer> money = new ArrayList<Integer>();		
+		int[] length = new int[n-1]; 
+		int[] oil = new int[n];
 		
-		for (int i=0; i<n-1; i++) {length.add(sc.nextInt());} // 도시 사이의 거리
+		for (int i=0; i<n-1; i++) {length[i]=sc.nextInt();} // 도시 사이의 거리
 		
-		for (int i=0; i<n; i++) {money.add(sc.nextInt());} // 기름값
+		for (int i=0; i<n; i++) {oil[i]=sc.nextInt();} // 기름값 (1L당 금액)
 		
-		int total = length.get(0)*money.get(0);
+		int total = length[0]*oil[0]; // 가장 처음에는 다음 도시까지 갈 기름은 충전해야 함
+		int min = oil[0];
 		
 		for (int i=1; i<n-1; i++) {
-			if(money.get(i-1)<money.get(i)) {
-				total+=money.get(i-1)*length.get(i);
+			if(min<oil[i]) { // 전 도시의 기름값이 더 저렴할 경우
+				total+=min*length[i]; 
 			}else {
-				total+=money.get(i)*length.get(i);
+				min = oil[i];
+				total+=min*length[i];
 			}
 		}
 		
