@@ -14,16 +14,13 @@ public class Main {
 				b=b/2;
 				c = b%10;
 				count++;
-				if(a>b) {count =-1;}
 			}else if(c==1) {
 				b=b/10;
 				count++;
-				if(a>b) {count =-1;}
-			}else {
-				count = -1;
-				break;
-			}
+			}else{
+                break;
+            }
 		}
-		System.out.println(count);
+		System.out.println(a==b?count:-1);
 	}
 }
