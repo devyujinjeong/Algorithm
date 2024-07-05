@@ -14,8 +14,7 @@ public class Main {
             meetings[i][0] = sc.nextInt(); // 시작 시간
             meetings[i][1] = sc.nextInt(); // 종료 시간
         }
-
-        // 종료 시간 기준으로 정렬, 종료 시간이 같을 경우엔 시작 시간 기준으로 정렬
+        
         Arrays.sort(meetings, (o1, o2) -> (o1[1] == o2[1] ? o1[0] - o2[0] : o1[1] - o2[1]));
 
         int count = 0;
@@ -27,7 +26,6 @@ public class Main {
                 count++;
             }
         }
-
         System.out.println(count);
     }
 }
