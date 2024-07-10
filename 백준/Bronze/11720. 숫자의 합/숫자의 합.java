@@ -7,13 +7,9 @@ public class Main {
 		int N = sc.nextInt();
 		int sum = 0; 
 		String num = sc.next();
-		
-		// N이라는 숫자를 입력하는 순간 크기가 정해지기 때문에, 배열 사용
-		char[] numSplit = new char[N];
-		
+	
 		for(int i=0; i<N; i++) {
-			numSplit[i] = num.charAt(i);
-			sum += Character.getNumericValue(numSplit[i]);
+			sum += Character.getNumericValue(num.charAt(i));
 		}		
 		System.out.println(sum);
 	}
