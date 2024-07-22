@@ -1,15 +1,17 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Main {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-
-		int N = sc.nextInt();
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		int N = Integer.parseInt(br.readLine());
 		int count =0;
 		
 		for (int i = 0; i < N; i++) {
-			String word = sc.next();
+			String word = br.readLine();
 			ArrayList<Character> wordChar = new ArrayList<Character>();
 			char first = word.charAt(0);
 			wordChar.add(first);
