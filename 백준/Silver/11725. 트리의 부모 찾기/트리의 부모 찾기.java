@@ -1,16 +1,19 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class Main {
 	static ArrayList<Integer>[] A; // 인접 배열을 저장할 리스트
 	static int[] result; // 각각의 부모들을 저장할 리스트
-	static boolean visited[]; // 방문 여부
+	static boolean[] visited; // 방문 여부
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		
 		int N = Integer.parseInt(br.readLine());
 				
@@ -33,8 +36,11 @@ public class Main {
 		DFS(1);
 		
 		for(int i=2; i<N+1; i++) {
-			System.out.println(result[i]);
+			bw.write(result[i]+"\n");
 		}
+		
+		bw.flush();
+		bw.close();
 	}
 	
 	static void DFS(int v) {
