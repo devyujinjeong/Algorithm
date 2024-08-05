@@ -4,12 +4,14 @@ import java.io.InputStreamReader;
 
 public class Main {
 	static int n;
+    static StringBuilder sb;
 
 	static void DFS(int number, int digit) {
 		// 만약 자리수가 n과 같을 경우에 prime인지 확인하고 종료하기
 		if (digit == n) {
 			if (checkPrime(number)) {
-				System.out.println(number);
+	            sb.append(number).append("\n");
+
 				return;
 			}
 		}
@@ -34,7 +36,8 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
+		sb = new StringBuilder();
+		
 		n = Integer.parseInt(br.readLine());
 
 		// 2,3,5,7만 맨 앞으로 올 수 있음
@@ -42,5 +45,7 @@ public class Main {
 		DFS(3,1);
 		DFS(5,1);
 		DFS(7,1);
+		
+		System.out.println(sb);
 	}
 }
