@@ -22,8 +22,8 @@ public class Main {
 				DFS(i,d+1);
 			}
 		}
-		
-		visited[v] = false; 
+	
+		visited[v] = false;
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -48,21 +48,13 @@ public class Main {
 			relation[a].add(b);
 			relation[b].add(a);
 		}
-		
+				
 		for(int i=0; i<N; i++) {
 			DFS(i,1);
 			if(check) {
 				break;
 			}
-		}
-		
-		if(check) {
-			System.out.println(1);
-		}else {
-			System.out.println(0);
-		}
-		
-
+		}	
+		System.out.println(check?1:0);
 	}
-
 }
