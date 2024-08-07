@@ -25,7 +25,7 @@ public class Main {
 		for (int i = 0; i < N; i++) {
 			String num = br.readLine();
 			for (int j = 0; j < M; j++) {
-				maze[i][j] = Integer.parseInt(num.substring(j,j+1));
+				maze[i][j] = num.charAt(j)-48;
 			}
 		}
 		
@@ -54,7 +54,5 @@ public class Main {
 				}
 			}
 		}
-
 	}
-
 }
