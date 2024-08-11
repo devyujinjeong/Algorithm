@@ -35,7 +35,7 @@ public class Main {
 			result += first*second;
 		}
 		
-		if(minus.size()==1) { // 마이너스인 숫자가 하나라도 남아 있는 경우라면
+		if(!minus.isEmpty()) { // 마이너스인 숫자가 하나라도 남아 있는 경우라면
 			if(zero>0) {
 				result +=0;
 			}else { // 만약 0이라는 숫자가 하나도 존재하지 않는다면
@@ -50,7 +50,7 @@ public class Main {
 			result += first*second;
 		}
 		
-		if(plus.size()==1) {
+		if(!plus.isEmpty()) {
 			result += plus.peek()+one;			
 		}else {
 			result+=one;
