@@ -1,16 +1,19 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Main {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		String cal = sc.next();
+		String cal = br.readLine();
 		
         String[] numArr = cal.split("-|\\+"); // +와 -를 기준으로 문자 자르기
         
         int result = 0;
         int n = numArr.length;
+        
         ArrayList<Integer> num = new ArrayList<Integer>(); // 숫자를 담아두는 arraylist
         ArrayList<Character> sumOrSub = new ArrayList<Character>(); // 기호를 담아두는 arraylist
         
@@ -48,3 +51,4 @@ public class Main {
 	}
 
 }
+
