@@ -1,72 +1,71 @@
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.StringTokenizer;
 
 public class Main {
-	static int[] num;
+    static StringBuilder sb = new StringBuilder();
+    static int[] num;
+    static int[] rank;
 
-	static void union(int a, int b) {
-		a = find(a);
-		b = find(b);
-		
-		if(a!=b) {
-			num[b]=num[a];
-		}		
-	}
+    static void union(int a, int b) {
+        a = find(a);
+        b = find(b);
+        
+        if (a != b) {
+            if (rank[a] > rank[b]) {
+                num[b] = a;
+            } else {
+                num[a] = b;
+                if (rank[a] == rank[b]) {
+                    rank[b]++;
+                }
+            }
+        }
+    }
 
-	static int find(int a) {
-		if (num[a] == a) {
-			return a;
-		} else {
-			return find(num[a]);
-		}
-	}
-	
-	static boolean checkSamePnode(int a, int b) {
-		a = find(a);
-		b = find(b);
-		
-		if(a==b) {
-			return true;
-		}else {
-			return false;
-		}
-	}
+    static int find(int a) {
+        if (num[a] != a) {
+            num[a] = find(num[a]);
+        }
+        return num[a];
+    }
+    
+    static void checkSamePnode(int a, int b) throws IOException {        
+        if (find(a) == find(b)) {
+            sb.append("YES").append('\n');
+        } else {
+            sb.append("NO").append('\n');
+        }
+    }
 
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		StringTokenizer st = new StringTokenizer(br.readLine());
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-		int n = Integer.parseInt(st.nextToken());
-		int m = Integer.parseInt(st.nextToken());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
 
-		num = new int[n + 1];
-		for (int i = 0; i <= n; i++) {
-			num[i] = i;
-		}
+        num = new int[n + 1];
+        rank = new int[n + 1];
 
-		for (int i = 0; i < m; i++) {
-			st = new StringTokenizer(br.readLine());
-			int w = Integer.parseInt(st.nextToken());
-			int a = Integer.parseInt(st.nextToken());
-			int b = Integer.parseInt(st.nextToken());
+        for (int i = 0; i <= n; i++) {
+            num[i] = i;
+        }
 
-			if (w == 0) {
-				union(a, b);
-			} else {
-				if (checkSamePnode(a,b)) {
-					bw.write("YES" + "\n");
-				} else {
-					bw.write("NO" + "\n");
-				}
-			}
-		}
+        for (int i = 0; i < m; i++) {
+            st = new StringTokenizer(br.readLine());
+            int w = Integer.parseInt(st.nextToken());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
 
-		bw.flush();
-		bw.close();
-	}
+            if (w == 0) {
+                union(a, b);
+            } else {
+                checkSamePnode(a, b);
+            }
+        }
+        
+        System.out.println(sb.toString());
+    }
 }
