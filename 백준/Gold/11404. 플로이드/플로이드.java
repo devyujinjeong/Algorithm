@@ -11,6 +11,7 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		StringBuilder sb = new StringBuilder();
 
 		int N = Integer.parseInt(br.readLine());
 		int M = Integer.parseInt(br.readLine());
@@ -54,11 +55,12 @@ public class Main {
 				if (D[i][j] == inf) {
 					D[i][j] = 0;
 				}
-				bw.write(D[i][j]+" ");
+				sb.append(D[i][j] + " ");
 			}
-			bw.write("\n");
+			sb.append("\n");
 		}
-		
+
+		bw.append(sb);
 		bw.flush();
 		bw.close();
 	}
