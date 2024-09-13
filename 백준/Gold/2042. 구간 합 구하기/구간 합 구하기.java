@@ -9,6 +9,8 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
+        StringBuilder sb = new StringBuilder();
+
 		
 		int N = Integer.parseInt(st.nextToken());
 		int M = Integer.parseInt(st.nextToken());
@@ -44,10 +46,10 @@ public class Main {
 				changeNum(b,c);
 			}else if(a==2) { // a=2인 경우엔 b와 c 범위의 구간합을 구하기
 				c = c+start; // 인덱스 번호 맞추기
-				System.out.println(getSum(b,(int)c));
+				sb.append(getSum(b,(int)c)).append('\n');
 			}
-			
 		}
+		System.out.println(sb);
 	}
 	
 	static void setTree(int i) { // 트리 구조를 만드는 메소드
