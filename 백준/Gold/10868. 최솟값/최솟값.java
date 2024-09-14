@@ -1,9 +1,10 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class Main {
+public class Main{
 	static Long[] tree;
 
 	public static void main(String[] args) throws IOException {
@@ -26,10 +27,7 @@ public class Main {
 		int start = size / 2 - 1;
 
 		tree = new Long[size];
-
-		for (int i = 0; i <size; i++) {
-			tree[i] = Long.MAX_VALUE;
-		}
+        Arrays.fill(tree, Long.MAX_VALUE);
 
 		for (int i = start + 1; i <= start + N; i++) {
 			tree[i] = Long.parseLong(br.readLine());
