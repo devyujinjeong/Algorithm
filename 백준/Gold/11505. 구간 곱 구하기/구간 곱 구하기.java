@@ -6,7 +6,7 @@ import java.util.StringTokenizer;
 
 public class Main {
 	static long[] tree;
-	static long MOD = 1000000007;
+	static final int MOD = 1000000007;
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
