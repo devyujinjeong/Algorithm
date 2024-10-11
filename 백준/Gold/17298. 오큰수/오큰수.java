@@ -24,7 +24,7 @@ public class Main {
 		
 		index.push(0);
 		
-		for(int i=0; i<N; i++) {
+		for(int i=1; i<N; i++) {
 			// index를 저장하는 스택이 비어있지 않고, 오른쪽에 있는 숫자가 더 큰 경우
 			while(!index.isEmpty()&&num[index.peek()]<num[i]) {
 				ans[index.pop()] = num[i];
