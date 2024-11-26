@@ -1,12 +1,17 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 
 public class Main {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-		int k = sc.nextInt();
-		int D = 0; // 최소 조각
-		int result = 0; // 쪼개는 횟수
+		int k = Integer.parseInt(br.readLine());
+		int D = 0;
+		int result = 0;
 
 		int a = k;
 		while (a > 1) {
@@ -30,7 +35,8 @@ public class Main {
 			}
 		}
 
-		System.out.print(D + " " + result);
-
+		bw.write(D + " " + result);
+		bw.flush();
+		bw.close();
 	}
 }
