@@ -12,12 +12,10 @@ public class Solution {
         }        
         
         for(int i=0; i<a.length(); i++){
-            if((int)alpha[i]>=97){
-                int num = (int)alpha[i] - 32;
-                alpha[i] = (char)num;
+            if(alpha[i]>=97){
+                alpha[i] = (char)(alpha[i] - 32);
             }else{
-                int num = (int)alpha[i] + 32;
-                alpha[i] = (char)num;
+                alpha[i] = (char)(alpha[i] + 32);
             }
             
             System.out.print(alpha[i]);
