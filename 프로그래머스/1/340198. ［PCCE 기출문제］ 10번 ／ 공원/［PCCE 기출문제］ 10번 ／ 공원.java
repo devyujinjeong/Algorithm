@@ -22,7 +22,7 @@ class Solution {
         return -1; 
     }
 
-    private boolean canPlaceMat(String[][] park, int x, int y, int size) {
+    boolean canPlaceMat(String[][] park, int x, int y, int size) {
         int rows = park.length;
         int cols = park[0].length;
 
