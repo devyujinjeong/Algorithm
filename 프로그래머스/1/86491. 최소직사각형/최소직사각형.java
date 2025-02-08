@@ -4,21 +4,19 @@ class Solution {
         int answer = 0;
         
         int len = sizes.length;
-        int[] w = new int[len];
-        int[] h = new int[len];
-        
+        int w = 0;
+        int h = 0;
+
         for(int i=0; i<len; i++){
             int max = Math.max(sizes[i][0],sizes[i][1]);
             int min = Math.min(sizes[i][0],sizes[i][1]);
-
-            w[i] = max;
-            h[i] = min;
+            
+            w = Math.max(w,max);
+            h = Math.max(h,min);
+;
         }
         
-        Arrays.sort(w);
-        Arrays.sort(h);
-        
-        answer = w[len-1]*h[len-1];
+        answer = w*h;
         
         return answer;
     }
