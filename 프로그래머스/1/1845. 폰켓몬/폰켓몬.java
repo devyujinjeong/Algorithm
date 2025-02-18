@@ -4,15 +4,15 @@ class Solution {
         int answer = 0;
         int len = nums.length;
         
-        HashSet<Integer> pokemon = new HashSet<Integer>();
+        HashSet<Integer> phonekemon = new HashSet<Integer>();
         for(int i=0; i<len; i++){
-            pokemon.add(nums[i]);
+            phonekemon.add(nums[i]);
         }
         
-        if(pokemon.size()>len/2){
+        if(phonekemon.size()>len/2){
             answer = len/2;
         }else{
-            answer = pokemon.size();
+            answer = phonekemon.size();
         }
         
         return answer;
