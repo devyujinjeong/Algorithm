@@ -24,7 +24,7 @@ class Solution {
                 if (lost[j] == 0) continue; 
                 if (reserve[i] == lost[j] - 1 || reserve[i] == lost[j] + 1) {
                     answer++;
-                    lost[j] = -1; 
+                    lost[j] = 0; 
                     break;
                 }
             }
