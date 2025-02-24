@@ -12,11 +12,10 @@ public class Main {
 			A[i] = sc.nextInt();
 		}
 		
-		Arrays.sort(A);
-		
+	    Arrays.sort(A);
+        
 		for(int i=0 ;i<N; i++) {
 			System.out.println(A[i]);
-		}
-		
+		}	
 	}
 }
