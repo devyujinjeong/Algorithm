@@ -12,20 +12,15 @@ class Solution {
                 count2++;
             }
             
-            if(count1==count2){
-                if(i!=s.length()-1){
-                    first = s.charAt(i+1);
-                }
-                count1 = 0;
-                count2 = 0;
+            if (count1 == count2) {
                 answer++;
-            }else{
-                // 만약에 마지막 상황인데 count1과 count2가 같지 않다면 answer++
-                if(i==s.length()-1){
-                    answer++;
+                if (i + 1 < s.length()) {
+                    first = s.charAt(i + 1);
+                    count1 = 0; 
+                    count2 = 0;
                 }
             }
         }
-        return answer;
+        return answer +  (count1 != count2 ? 1 : 0);
     }
 }
