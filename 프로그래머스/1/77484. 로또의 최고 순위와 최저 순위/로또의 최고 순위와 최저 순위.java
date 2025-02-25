@@ -13,9 +13,6 @@ class Solution {
         Arrays.sort(lottos);
         Arrays.sort(win_nums);
 
-
-        
-        
         int j = 0;
         for(int i=0; i<6; i++){
             if(lottos[i]==0){
@@ -24,19 +21,15 @@ class Solution {
                 while(j!=6&&win_nums[j]<=lottos[i]){
                     if(lottos[i] == win_nums[j]){
                         check++; 
-                        j++;
                         break;
-                    }else{
-                        j++;
                     }
+                    j++;
                 }
             }
         }
         
         answer[0] = ranking[check+zero];
         answer[1] =  ranking[check];
-        
-        
         
         return answer;
     }
