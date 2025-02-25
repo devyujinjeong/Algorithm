@@ -1,6 +1,6 @@
 class Solution {
     public String solution(String s, String skip, int index) {
-        StringBuilder answer = new StringBuilder();
+        String answer = "";
         
         for (char c : s.toCharArray()) {
             int count = 0;
@@ -20,9 +20,9 @@ class Solution {
                 }
             }
             
-            answer.append(temp);
+            answer+=temp;
         }
         
-        return answer.toString();
+        return answer;
     }
 }
