@@ -1,36 +1,39 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Stack;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
-        Stack<Integer> st = new Stack<>();
+        Stack<Integer> stack = new Stack<>();
 
-        int n = sc.nextInt();
+        int n = Integer.parseInt(br.readLine());
 
         for (int i = 0; i < n; i++) {
-            String s = sc.next();
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            String command = st.nextToken();
 
-            switch (s) {
+            switch (command) {
                 case "push":
-                    st.push(sc.nextInt());
+                    stack.push(Integer.parseInt(st.nextToken()));
                     break;
                 case "top":
-                    sb.append(st.isEmpty() ? -1 : st.peek()).append("\n");
+                    sb.append(stack.isEmpty() ? -1 : stack.peek()).append("\n");
                     break;
                 case "size":
-                    sb.append(st.size()).append("\n");
+                    sb.append(stack.size()).append("\n");
                     break;
                 case "empty":
-                    sb.append(st.isEmpty() ? 1 : 0).append("\n");
+                    sb.append(stack.isEmpty() ? 1 : 0).append("\n");
                     break;
                 case "pop":
-                    sb.append(st.isEmpty() ? -1 : st.pop()).append("\n");
+                    sb.append(stack.isEmpty() ? -1 : stack.pop()).append("\n");
                     break;
             }
         }
-
         System.out.print(sb);
     }
 }
