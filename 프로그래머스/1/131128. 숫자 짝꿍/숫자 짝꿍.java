@@ -21,7 +21,7 @@ class Solution {
             return "-1";
         }
         
-        if (answer.toString().equals("0".repeat(answer.length()))) {
+        if (answer.toString().charAt(0)=='0') {
             return "0";
         }
 
