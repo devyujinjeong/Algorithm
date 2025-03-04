@@ -5,20 +5,18 @@ class Solution {
         Map<String, Integer> map = new HashMap<>();
 
         for (int i = 0; i < players.length; i++) {
-            map.put(players[i], i);  // index 저장
+            map.put(players[i], i);
         }
 
         for (String runner : callings) {
-            int win = map.get(runner);  
-            
-            if (win == 0) continue;  // 맨 앞이면 넘어감
+            int win = map.get(runner);     
             
             String temp = players[win];
             players[win] = players[win - 1];
             players[win - 1] = temp;
 
-            map.put(players[win], win);
-            map.put(players[win - 1], win - 1);
+            map.replace(players[win], win);
+            map.replace(players[win - 1], win - 1);
         }
 
         return players;
