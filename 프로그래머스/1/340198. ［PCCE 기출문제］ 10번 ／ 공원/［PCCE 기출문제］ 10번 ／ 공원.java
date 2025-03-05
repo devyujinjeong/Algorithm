@@ -1,39 +1,40 @@
 import java.util.*;
-
 class Solution {
     public int solution(int[] mats, String[][] park) {
-        int rows = park.length;
-        int cols = park[0].length;
-
+        // 가장 큰 돗자리부터 비교하기 위해서, 정렬하기
         Arrays.sort(mats);
         
-        for (int i = mats.length - 1; i >= 0; i--) {
-            int size = mats[i];
-
-            for (int x = 0; x < rows; x++) {
-                for (int y = 0; y < cols; y++) {
-                    if (park[x][y].equals("-1") && canPlaceMat(park, x, y, size)) {
-                        return size; 
+        for(int k = mats.length-1; k>=0; k--){
+            int size = mats[k];
+            
+            for(int i=0; i<park.length; i++){
+                for(int j=0; j<park[i].length; j++){
+                    if(park[i][j].equals("-1")&&canPlaceMat(park, size,i,j)){
+                        return size;
                     }
                 }
             }
         }
-
-        return -1; 
+        
+        return -1;
     }
+    
+    // 해당 사이즈의 돗자리를 깔 수 있는지 확인
+    boolean canPlaceMat(String[][] arr, int size, int a, int b){ 
+        boolean check = true;
+        int row = arr.length;
+        int col = arr[0].length;
+        
+        if (a + size > row || b + size > col) {return false;}
 
-    boolean canPlaceMat(String[][] park, int x, int y, int size) {
-        int rows = park.length;
-        int cols = park[0].length;
-
-        if (x + size > rows || y + size > cols) {return false;}
-
-        for (int i = x; i < x + size; i++) {
-            for (int j = y; j < y + size; j++) {
-                if (!park[i][j].equals("-1")) {return false;} 
+        for(int i=a; i<a+size; i++){
+             for(int j=b; j<b+size; j++){
+                if(!arr[i][j].equals("-1")){
+                    return false;
+                }
             }
         }
-
-        return true; 
+    
+        return check;
     }
 }
