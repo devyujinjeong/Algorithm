@@ -1,19 +1,22 @@
+import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        
-        int n = sc.nextInt(); 
-        int w = sc.nextInt();
-        int l = sc.nextInt();
-        
-        Queue<Integer> truckWeight = new LinkedList<>(); // 대기 중인 트럭
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int n = Integer.parseInt(st.nextToken()); 
+        int w = Integer.parseInt(st.nextToken()); 
+        int l = Integer.parseInt(st.nextToken()); 
+
+        Queue<Integer> truckWeight = new LinkedList<>();
+        st = new StringTokenizer(br.readLine());
         for (int i = 0; i < n; i++) {
-            truckWeight.add(sc.nextInt());
+            truckWeight.add(Integer.parseInt(st.nextToken()));
         }
 
-        Queue<Integer> bridge = new LinkedList<>(); // 다리 위의 상태
+        Queue<Integer> bridge = new LinkedList<>();
         int time = 0;
         int sum = 0;
 
@@ -35,6 +38,6 @@ public class Main {
             time++;
         }
 
-        System.out.println(time + w); 
+        System.out.println(time + w); // 마지막 트럭이 다리를 빠져나가는 시간 추가
     }
 }
