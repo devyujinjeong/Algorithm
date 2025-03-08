@@ -4,29 +4,32 @@ class Solution {
     public int[] solution(String[] id_list, String[] report, int k) {
         int[] answer = new int[id_list.length];
 
-        HashMap<String, HashSet<String>> reportMap = new HashMap<>();
+        HashMap<String, Integer> userId = new HashMap<>();
+        HashMap<String, HashSet<String>> hs = new HashMap<>();
 
-        for (String rep : report) {
+        for(int i=0; i<id_list.length; i++){
+            userId.put(id_list[i],i);    
+        }
+        
+        for(String rep : report) {
             String[] names = rep.split(" ");
             String reporter = names[0];
             String reported = names[1]; 
 
-            reportMap.putIfAbsent(reported, new HashSet<>());
-            reportMap.get(reported).add(reporter); 
+            hs.putIfAbsent(reported, new HashSet<>());
+            hs.get(reported).add(reporter);
+
         }
 
-        HashMap<String, Integer> result = new HashMap<>();
-        for (String reported : reportMap.keySet()) {
-            if (reportMap.get(reported).size() >= k) {
-                for (String reporter : reportMap.get(reported)) {
-                    result.put(reporter, result.getOrDefault(reporter, 0) + 1);
+        for (String reported : hs.keySet()) {
+            if (hs.get(reported).size() >= k) {
+                for(String name : hs.get(reported)){
+                    int idx = userId.get(name);
+                    answer[idx]++;
                 }
             }
         }
 
-        for (int i = 0; i < id_list.length; i++) {
-            answer[i] = result.getOrDefault(id_list[i], 0);
-        }
 
         return answer;
     }
