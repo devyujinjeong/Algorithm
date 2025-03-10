@@ -1,17 +1,23 @@
 import java.util.*;
+
 class Solution {
     public String solution(String[] participant, String[] completion) {
-        Arrays.sort(participant);
-        Arrays.sort(completion);
+        Map<String, Integer> runner = new HashMap<>();
 
-        for(int i=0; i<completion.length; i++){
-            if(!participant[i].equals(completion[i])){
-                return participant[i];
+        for (String p : participant) {
+            runner.put(p, runner.getOrDefault(p, 0) + 1);
+        }
+
+        for (String c : completion) {
+            runner.put(c, runner.get(c) - 1);
+        }
+
+        for (String key : runner.keySet()) {
+            if (runner.get(key) != 0) {
+                return key;
             }
         }
         
-        return participant[participant.length-1];
-
-
+        return ""; 
     }
 }
