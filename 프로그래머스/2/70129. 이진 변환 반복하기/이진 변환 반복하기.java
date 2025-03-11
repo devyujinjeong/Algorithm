@@ -3,11 +3,10 @@ class Solution {
         int[] answer = new int[2];
 
         while(!s.equals("1")){
-            int first = s.length();
+            answer[1]+= s.length();
             s = s.replace("0","");
-            int second = s.length();
-            answer[1]+= first-second;
-            s = getBinaryNum(second);
+            answer[1]-= s.length();
+            s = getBinaryNum(s.length());
             answer[0]++;
         }
  
