@@ -14,22 +14,21 @@ public class Main {
 
         for(int i=0; i<T; i++){
             int N = Integer.parseInt(br.readLine()); // 지원자 수
-            int[][] score = new int[N][2];
+            int[] score = new int[N+1];
             int count = 0;
 
             for(int j=0; j<N; j++){
                 st = new StringTokenizer(br.readLine());
-                score[j][0] = Integer.parseInt(st.nextToken()); // 1차 시험 점수
-                score[j][1] = Integer.parseInt(st.nextToken()); // 2차 시험 점수
+                int a =  Integer.parseInt(st.nextToken());
+                int b =  Integer.parseInt(st.nextToken());
+                score[a] = b;
             }
 
-            Arrays.sort(score,(o1,o2) -> (o1[0]==o2[0]?o1[1]-o2[1]:o1[0]-o2[0]));
+            int min = score[1];
 
-            int min = score[0][1];
-
-            for(int j=0; j<N; j++) {
-                if (min >= score[j][1]){
-                    min = score[j][1];
+            for(int j=1; j<N+1; j++) {
+                if (min >= score[j]){
+                    min = score[j];
                     count++;
                 }
             }
