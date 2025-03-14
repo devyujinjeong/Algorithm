@@ -2,16 +2,12 @@ class Solution {
     public int solution(int n) {
         int answer = 0;
                 
-        String binary = Integer.toBinaryString(n);
-        String oneNum = binary.replace("0","");
-        int len = oneNum.length();
+        int a = Integer.bitCount(n);
         
-        while (true) {
-            n++; 
-            binary = Integer.toBinaryString(n);
-            oneNum = binary.replace("0","");
-            
-            if (len == oneNum.length()) {
+        while(true){
+            n++;
+            int b = Integer.bitCount(n);
+            if(a==b){
                 answer = n;
                 break;
             }
