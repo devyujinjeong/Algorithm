@@ -1,10 +1,7 @@
-
 import java.util.*;
+
 class Solution{
     public int solution(String s){
-        int answer = 0;
-        
-
         Stack<Character> word = new Stack<>();
         
         for(int i=0; i<s.length(); i++){
@@ -15,9 +12,7 @@ class Solution{
                 word.push(temp);
             }
         }        
-        
-        answer = word.isEmpty()?1:0;
-        
-        return answer;
+                
+        return word.isEmpty()?1:0;
     }
 }
