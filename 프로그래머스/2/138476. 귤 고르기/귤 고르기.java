@@ -1,4 +1,5 @@
 import java.util.*;
+
 class Solution {
     public int solution(int k, int[] tangerine) {
         int answer = 1;
@@ -10,13 +11,8 @@ class Solution {
         }
         
         List<Integer> keyList = new LinkedList<>(map.keySet());
+        keyList.sort((o1,o2) -> map.get(o2)-map.get(o1));
 
-        keyList.sort(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return map.get(o2).compareTo(map.get(o1));
-            }
-        });
 
         for (Integer key : keyList) {
             k-=map.get(key);
