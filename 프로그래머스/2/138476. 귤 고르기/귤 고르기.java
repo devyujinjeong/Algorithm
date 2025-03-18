@@ -10,12 +10,12 @@ class Solution {
             map.put(tangerine[i],map.getOrDefault(tangerine[i],0)+1);
         }
         
-        List<Integer> keyList = new LinkedList<>(map.keySet());
-        keyList.sort((o1,o2) -> map.get(o2)-map.get(o1));
+        List<Integer> valueList = new LinkedList<>(map.values());
+        valueList.sort((o1,o2) -> o2-o1);
 
 
-        for (Integer key : keyList) {
-            k-=map.get(key);
+        for (Integer value : valueList) {
+            k-=value;
             if(k>0){
                 answer++;
             }else{
