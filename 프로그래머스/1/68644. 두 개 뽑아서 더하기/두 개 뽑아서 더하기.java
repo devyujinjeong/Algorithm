@@ -9,15 +9,7 @@ class Solution {
                 hs.add(numbers[i]+numbers[j]);
             }
         }
-
-        int[] answer = new int[hs.size()];
-        int i = 0;
-        for(int num:hs){
-            answer[i++] = num;
-        }
         
-        Arrays.sort(answer);
-        
-        return answer;
+        return hs.stream().sorted().mapToInt(Integer::intValue).toArray();
     }
 }
