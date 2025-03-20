@@ -1,6 +1,6 @@
 import java.util.*;
 class Solution {
-    public  ArrayList<Integer> solution(int[] answers) {
+    public int[] solution(int[] answers) {
         ArrayList<Integer> answer =  new ArrayList<Integer>();
 
         String[] repeating = {"12345","21232425","3311224455"};
@@ -26,6 +26,6 @@ class Solution {
             }
         }        
         
-        return answer;
+        return answer.stream().mapToInt(Integer::intValue).toArray();
     }
 }
