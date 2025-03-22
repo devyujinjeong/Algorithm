@@ -23,8 +23,8 @@ class Solution {
                 continue;
             }
 
-            String path1 = nowX + "," + nowY + "->" + nextX + "," + nextY;
-            String path2 = nextX + "," + nextY + "->" + nowX + "," + nowY;
+            String path1 = nowX + "," + nowY + "," + nextX + "," + nextY;
+            String path2 = nextX + "," + nextY + "," + nowX + "," + nowY;
 
             if (!path.contains(path1)) {
                 path.add(path1);
