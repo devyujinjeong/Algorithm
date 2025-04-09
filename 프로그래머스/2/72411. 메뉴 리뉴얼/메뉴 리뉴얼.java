@@ -16,6 +16,7 @@ class Solution {
                 combine(temp, 0, len, "");
             }
 
+            // 주문별로 최대인 조합의 수 구하기
             int max = 0;
             for (int count : menu.values()) {
                 if (count >= 2) {
