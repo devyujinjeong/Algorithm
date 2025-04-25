@@ -1,53 +1,67 @@
 import java.util.*;
 
 class Solution {
+    // 현재 위치, 양의 수, 늑대의 수, 방문 내역을 기록
+    private static class Info {
+        int node, sheep, wolf;
+        HashSet<Integer> visited;
+        
+        public Info(int node, int sheep, int wolf, HashSet<Integer> visited) {
+            this.node = node;
+            this.sheep = sheep;
+            this.wolf = wolf;
+            this.visited = visited;
+        }
+    }
+    
     private static ArrayList<Integer>[] tree;
-    private static int answer;
-
+    static int answer;
+    
     public int solution(int[] info, int[][] edges) {
-        int n = info.length;
-        tree = new ArrayList[n];
-        for (int i = 0; i < n; i++) {
+        answer = 0;
+        tree = new ArrayList[info.length];
+        for(int i=0; i<tree.length; i++) {
             tree[i] = new ArrayList<>();
         }
-
-        for (int[] edge : edges) {
+        
+        // 연결 관계 저장하기
+        for(int[] edge : edges) {
             tree[edge[0]].add(edge[1]);
         }
-
-        answer = 0;
-        boolean[] visited = new boolean[n];
-        visited[0] = true;
-
-        List<Integer> nextNodes = new ArrayList<>();
-        nextNodes.addAll(tree[0]);
-
-        dfs(info, 1, 0, visited, nextNodes);
-
+        
+        ArrayDeque<Info> queue = new ArrayDeque<>();
+        // 루트 노드는 항상 양이기 때문에 1추가
+        queue.add(new Info(0, 1, 0, new HashSet<>()));
+    
+        // 큐가 빌 때까지 반복
+        while(!queue.isEmpty()) {
+            Info now = queue.poll();
+            // answer과 현재 양의 수 중 더 큰 값을 pick 하기
+            answer = Math.max(answer, now.sheep);
+            // 방문한 노드를 저장하는 배열에 현재 노드의 이웃 노드 추가
+            // 다음에 방문할 노드들의 정보가 들어있는 것!
+            now.visited.addAll(tree[now.node]);
+            
+            // 인접한 노드에 대해서 탐색하기
+            // visited는 현재까지 방문한 노드
+            for(int next : now.visited) {
+                // 기존 hashset에 데이터를 복사
+                HashSet<Integer> set = new HashSet<>(now.visited);
+                // 현재 방문한 정점을 제거하기
+                set.remove(next);
+                
+                if(info[next] == 1) { // 만약 늑대라면
+                    // 양과 늑대의 수가 다른 경우에만
+                    if(now.sheep != now.wolf + 1) {
+                        queue.add(new Info(next, now.sheep, now.wolf+1, set));
+                    }
+                } else { // 만약 양이라면 무조건 방문하기
+                    queue.add(new Info(next, now.sheep+1, now.wolf, set));
+                }
+            }
+        }
+        
         return answer;
     }
 
-    private void dfs(int[] info, int sheep, int wolf, boolean[] visited, List<Integer> nextNodes) {
-        if (sheep <= wolf) return;
-        answer = Math.max(answer, sheep);
-
-        for (int i = 0; i < nextNodes.size(); i++) {
-            int next = nextNodes.get(i);
-
-            boolean[] visitedCopy = visited.clone();
-            visitedCopy[next] = true;
-
-            List<Integer> nextList = new ArrayList<>(nextNodes);
-            nextList.remove(i);
-            for (int child : tree[next]) {
-                if (!visitedCopy[child]) nextList.add(child);
-            }
-
-            if (info[next] == 0) { // 양
-                dfs(info, sheep + 1, wolf, visitedCopy, nextList);
-            } else { // 늑대
-                dfs(info, sheep, wolf + 1, visitedCopy, nextList);
-            }
-        }
-    }
 }
