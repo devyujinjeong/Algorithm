@@ -1,24 +1,24 @@
 class Solution {
-    static boolean[] visited;
     static int[][] computers;
-    static int count;
-    
+    static boolean[] visited;
+
     public int solution(int n, int[][] computers) {
+        int answer = 0;
+        this.computers = computers;
         visited = new boolean[n];
-        this.computers = computers; 
-        count = 0;
-
-        for (int i = 0; i < n; i++) {
-            if (!visited[i]) { 
-                count++;
+        
+        for(int i=0; i<n; i++) {
+            if(!visited[i]) {
                 dfs(i, n);
+                answer++;
             }
+            
         }
-
-        return count;
+        
+        return answer;
     }
     
-    public static void dfs(int v, int n) {
+    static void dfs(int v, int n){
         visited[v] = true;
 
         for (int i = 0; i < n; i++) {
