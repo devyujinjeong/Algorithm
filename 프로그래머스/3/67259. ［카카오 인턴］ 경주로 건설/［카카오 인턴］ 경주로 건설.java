@@ -30,8 +30,7 @@ class Solution {
     }
 
     static void bfs() {
-        PriorityQueue<Node> pq = 
-            new PriorityQueue<>(Comparator.comparingInt(n -> n.cost));
+        PriorityQueue<Node> pq = new PriorityQueue<>((a, b) -> a.cost - b.cost);
         
         // 첫 시작점은 방향이 없으니깐 -1로 설정
         pq.offer(new Node(0, 0, -1, 0));
