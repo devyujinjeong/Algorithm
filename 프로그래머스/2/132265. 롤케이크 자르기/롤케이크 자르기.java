@@ -4,33 +4,35 @@ class Solution {
     public int solution(int[] topping) {
         int answer = 0;
 
-        Map<Integer, Integer> rightMap = new HashMap<>();
-        Set<Integer> leftSet = new HashSet<>();
-
-        // 처음에 모든 토핑은 오른쪽에 있음
-        for (int top : topping) {
-            rightMap.put(top, rightMap.getOrDefault(top, 0) + 1);
+        // 오른쪽 토핑: 종류별 개수 카운트
+        HashMap<Integer, Integer> right = new HashMap<>();
+        HashSet<Integer> left = new HashSet<>();
+        
+        for(int i : topping) {
+            right.put(i, right.getOrDefault(i, 0) + 1);
         }
-
-        // 한 칸씩 왼쪽으로 옮기면서 체크
-        for (int i = 0; i < topping.length; i++) {
-            int current = topping[i];
-
-            // 왼쪽 Set에 추가
-            leftSet.add(current);
-
-            // 오른쪽 Map에서 개수 줄이기
-            rightMap.put(current, rightMap.get(current) - 1);
-            if (rightMap.get(current) == 0) {
-                rightMap.remove(current);
+        
+        for(int i = 0; i < topping.length; i++) {
+            // 왼쪽에 토핑 추가
+            left.add(topping[i]);
+            // 오른쪽에서 토핑 하나 제거
+            right.put(topping[i], right.get(topping[i]) - 1);
+            
+            int count1 = left.size();    // 왼쪽 토핑 종류 수
+            
+            // 오른쪽에서 특정 토핑이 다 빠졌다면 종류 수 감소
+            if(right.get(topping[i]) == 0) {
+                right.remove(topping[i]);
             }
-
-            // 둘의 종류 수가 같으면 공평한 컷!
-            if (leftSet.size() == rightMap.size()) {
+            
+            int count2 = right.size();   // 오른쪽 토핑 종류 수
+            
+            // 양쪽 종류 수가 같으면 정답++
+            if(count1 == count2) {
                 answer++;
             }
         }
-
+        
         return answer;
     }
 }
