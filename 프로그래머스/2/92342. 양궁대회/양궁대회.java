@@ -33,7 +33,7 @@ class Solution {
     }
 
     private static void backtracking(int n, int idx, int[] ryan) {
-        if (idx == 11 || n == 0) {
+        if (idx == 11) {
             if (n > 0) ryan[10] += n; // 남은 화살 몰아주기
             calculateDiff(ryan);
             if (n > 0) ryan[10] -= n;
