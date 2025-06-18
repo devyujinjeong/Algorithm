@@ -1,26 +1,26 @@
 import java.util.*;
 
 class Solution {
-    public  ArrayList<Integer> solution(String s) {
-        // {{, }} 자르기
-        s = s.substring(2,s.length()-2);
-        String[] arr = s.split("},\\{");  
+    public ArrayList<Integer> solution(String s) {
+        ArrayList<Integer> answer = new ArrayList<>();
         
-        // 길이를 기준으로 정렬하기
-        Arrays.sort(arr, (a, b) -> a.length() - b.length());
+        s = s.substring(1, s.length()-2);
+        s = s.replace("{", "");
         
-        ArrayList<Integer> result = new ArrayList<>();
-        
-        for (String group : arr) {
-            String[] numbers = group.split(",");
-            for (String num : numbers) {
-                int value = Integer.parseInt(num);
-                if (!result.contains(value)) {
-                    result.add(value);
+        String[] num = s.split("},");
+
+        Arrays.sort(num, (a,b) -> (a.length() - b.length()));
+                
+        for(int i=0; i<num.length; i++){
+            String[] nums = num[i].split(",");
+            for(int j=0; j<nums.length; j++){
+                int temp = Integer.parseInt(nums[j]);
+                if(!answer.contains(temp)) {
+                    answer.add(temp);
                 }
             }
         }
         
-        return result;
+        return answer;
     }
 }
