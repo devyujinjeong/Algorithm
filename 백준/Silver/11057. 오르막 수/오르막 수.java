@@ -23,7 +23,7 @@ public class Main {
 
         for(int i=2; i<=N; i++) {
             for(int j = 1; j<=9; j++) {
-                dp[i][j] = (dp[i-1][j] % mod + dp[i][j-1] % mod) % mod;
+                dp[i][j] = (dp[i-1][j] + dp[i][j-1]) % mod;
             }
         }
 
