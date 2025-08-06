@@ -5,34 +5,36 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		int N = Integer.parseInt(br.readLine());
-		int M = Integer.parseInt(br.readLine());
-		int start = 0, count = 0, end = N - 1;
+        int N = Integer.parseInt(br.readLine());
+        int M = Integer.parseInt(br.readLine());
+        int count = 0;
 
-		int[] numList = new int[N];
+        int[] num = new int[N];
 
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		for (int i = 0; i < N; i++) {
-			numList[i] = Integer.parseInt(st.nextToken());
-		}
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for(int i=0;i <N; i++) {
+            num[i] = Integer.parseInt(st.nextToken());
+        }
 
-		Arrays.sort(numList);
+        Arrays.sort(num); // 1. 정렬하기
 
-		int sum = numList[start] + numList[end];
+        int s = 0;
+        int e = N-1;
+        while(s<e) {
+            if (num[s] + num[e] < M) { // M보다 작은 경우
+                s++;
+            } else if (num[s] + num[e] > M) {// M보다 큰 경우
+                e--;
+            } else {
+                s++;
+                e--;
+                count++;
+            }
+        }
 
-		while (start < end) {
-			sum = numList[start] + numList[end];
-			if (sum == M) {
-				count++; start++; end--;
-			} else if (sum > M) {
-				end--;
-			} else {
-				start++;
-			}
-		}
-		System.out.println(count);
-	}
+        System.out.println(count);
+    }
 }
