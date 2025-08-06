@@ -1,28 +1,32 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Main {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		
-		int N = sc.nextInt();
-		int count = 1;
-		int sum = 1;
-		int start = 1;
-		int end = 1;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		while(end!=N) {
-			if(sum<N) {
-				end++;
-				sum+=end;
-			}else if(sum>N) {
-				sum-=start;
-				start++;
-			}else {
-				end++;
-				sum+=end;
-				count++;
-			}
-		}		
-		System.out.println(count);
-	}
+        int N = Integer.parseInt(br.readLine());
+        int answer = 1; // 자기 자신 포함하기
+        int s = 1;
+        int e = 1;
+        int sum = 1;
+
+        while(e!=N) {
+            if(sum < N) {
+                e++;
+                sum+=e;
+            } else if(sum>N) {
+                sum-=s;
+                s++;
+            } else {
+                e++;
+                sum+=e;
+                answer++;
+            }
+        }
+
+        System.out.println(answer);
+
+    }
 }
