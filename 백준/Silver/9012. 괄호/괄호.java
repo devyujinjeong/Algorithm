@@ -6,29 +6,26 @@ import java.util.Stack;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
 
-        int n = Integer.parseInt(br.readLine());
+        for(int i=0; i<N; i++) {
+            String answer = "YES";
+            String s = br.readLine();
+            Stack<Character> stack = new Stack<>();
 
-        for (int i = 0; i < n; i++) {
-            String vps = br.readLine();
-            Stack<Character> ps = new Stack<Character>();
-            
-            boolean isVPS = true;
-            for (int j = 0; j < vps.length(); j++) {
-                if (vps.charAt(j) == '(') {
-                    ps.push(vps.charAt(j));
-                } else if (ps.isEmpty()) {
-                    isVPS = false;
-                    break;
+            for(int j=0; j<s.length(); j++) {
+                if(s.charAt(j) == '(') {
+                    stack.add('(');
+                } else if(s.charAt(j) == ')' && !stack.isEmpty()){
+                    stack.pop();
                 } else {
-                    ps.pop();
+                    answer = "NO";
                 }
             }
-            if (isVPS && ps.isEmpty()) {
-                System.out.println("YES");
-            } else {
-                System.out.println("NO");
-            }
+
+            if(!stack.isEmpty()) answer = "NO";
+
+            System.out.println(answer);
         }
     }
 }
