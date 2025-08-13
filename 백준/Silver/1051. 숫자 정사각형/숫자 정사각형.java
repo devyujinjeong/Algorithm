@@ -18,9 +18,9 @@ public class Main {
 
         /* 1. 직사각형 만들기  */
         for(int i=0; i<N; i++) {
-            String[] num = br.readLine().split("");
+            String num = br.readLine();
             for(int j=0; j<M; j++) {
-                tr[i][j] = Integer.parseInt(num[j]);
+                tr[i][j] = num.charAt(j) - '0';
             }
         }
 
