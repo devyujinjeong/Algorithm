@@ -1,14 +1,13 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class Main {
 
-    static int A,B;
-    static ArrayList<Integer> nums;
-    static boolean[] visited;
+    static int A, B, digit;
+    static int answer = -1;
+    static int[] num;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -17,42 +16,34 @@ public class Main {
         A = Integer.parseInt(st.nextToken());
         B = Integer.parseInt(st.nextToken());
 
-        nums = new ArrayList<>();
+        num = new int[10];
 
         while(A>0) {
-            nums.add(A%10);
+            num[A%10]++; // 해당 자리수의 개수 증가 (나머지가 2라면, 2의 개수 1개 증가)
             A/=10;
+            digit++;
         }
 
-        visited = new boolean[nums.size()];
+        getNumber(0, 0);
 
-        System.out.println(getNumber(0,0,nums.size()));
+        System.out.println(answer);
+
     }
 
-    static int getNumber(int cur, int depth, int digit) {
-        if (depth == digit) {
-            if (cur < B) { // 완성된 수가 B보다 작은 경우만
-                return cur;
-            }
-            return -1;
-        }
-
-        int maxValue = -1; // 가능한 최대값 추적
-
-        for (int i = 0; i < nums.size(); i++) {
-            if (!visited[i]) {
-                if (depth == 0 && nums.get(i) == 0) continue; // 맨 앞 0 제외
-
-                visited[i] = true;
-                int result = getNumber(cur * 10 + nums.get(i), depth + 1, digit);
-                visited[i] = false;
-
-                if (result > maxValue) {
-                    maxValue = result;
-                }
+    static void getNumber(int cur, int depth) {
+        if(depth == digit) {
+            if(cur < B) {
+                answer = Math.max(answer, cur);
+                return;
             }
         }
 
-        return maxValue;
+        for(int i=0; i<10; i++) {
+            if(num[i] == 0 || i==0 && cur==0) continue; // 숫자를 사용할 수 없거나 첫번째 자리가 0인 경우는 제외
+
+            num[i]--;
+            getNumber(cur*10 + i,depth+1);
+            num[i]++;
+        }
     }
 }
