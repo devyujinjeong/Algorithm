@@ -1,9 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -11,48 +8,33 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
 
-        int N = Integer.parseInt(br.readLine());
+        int T = Integer.parseInt(br.readLine());
 
-        for(int i=0; i<N; i++) {
-            int T = Integer.parseInt(br.readLine());
-            int count = 0;
+        for(int i=0; i<T; i++) {
+            int N = Integer.parseInt(br.readLine());
 
-            ArrayList<Integer>[] tree = new ArrayList[T+1];
-            boolean[] visited = new boolean[T+1];
-
-            for (int j = 1; j <= T; j++) {
-                tree[j] = new ArrayList<>();
-            }
+            int[] array = new int[N+1];
+            boolean[] visited = new boolean[N+1];
 
             StringTokenizer st = new StringTokenizer(br.readLine());
-            for(int k=1; k<=T; k++) {
-                int a = Integer.parseInt(st.nextToken());
-                // 양방향으로 값 넣기
-                tree[k].add(a);
-                tree[a].add(k);
+            for(int j=1; j<=N; j++) {
+                array[j] = Integer.parseInt(st.nextToken());
             }
 
-            Queue<Integer> q = new LinkedList<>();
-
-            for(int a=1; a<=T; a++) {
-                if(visited[a]) continue;
-
-                q.add(a);
-                visited[a] = true;
-
-                while(!q.isEmpty()) {
-                    int temp = q.poll();
-                    for(int num : tree[temp]) {
-                        if(visited[num]) continue;
-                        q.add(num);
-                        visited[num] = true;
+            int count = 0;
+            for(int k=1; k<=N; k++) {
+                if(!visited[k]) {
+                    int temp = k;
+                    while (!visited[temp]) {
+                        visited[temp] = true;
+                        temp = array[temp];
                     }
+                    count++;
                 }
-
-                count++;
             }
 
             sb.append(count).append("\n");
+
         }
 
         System.out.println(sb);
