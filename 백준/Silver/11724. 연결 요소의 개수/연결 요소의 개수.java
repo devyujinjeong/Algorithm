@@ -2,54 +2,65 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
-	static ArrayList<Integer>[] A;
-	static boolean visited[];
 
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
+    static boolean[] visited;
+    static ArrayList<Integer>[] tree;
+    static int count;
 
-		int n = Integer.parseInt(st.nextToken());
-		int m = Integer.parseInt(st.nextToken());
-		A = new ArrayList[n + 1];
-		visited = new boolean[n + 1];
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-		for (int i = 1; i < n + 1; i++) {
-			A[i] = new ArrayList<Integer>();
-		}
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
 
-		for (int i = 0; i < m; i++) {
-			st = new StringTokenizer(br.readLine());
-			int s = Integer.parseInt(st.nextToken());
-			int e = Integer.parseInt(st.nextToken());
-			A[s].add(e);
-			A[e].add(s);
-		}
+        visited = new boolean[N+1];
+        tree = new ArrayList[N+1];
 
-		int count = 0;
-		for (int i = 1; i < n + 1; i++) {
-			if (!visited[i]) {
-				count++;
-				DFS(i);
-			}
-		}
+        for(int i=1; i<=N; i++) {
+            tree[i] = new ArrayList<>();
+        }
 
-		System.out.println(count);
-	}
+        for(int i=0; i<M; i++) {
+            st = new StringTokenizer(br.readLine());
+            int u = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
 
-	static void DFS(int v) {
-		if (visited[v]) {
-			return;
-		}
+            tree[u].add(v);
+            tree[v].add(u);
+        }
 
-		visited[v] = true;
-		for (int i : A[v]) {
-			if (visited[i] == false) {
-				DFS(i);
-			}
-		}
-	}
+        for(int i=1; i<=N; i++) {
+            if(!visited[i]) {
+                count++;
+                findConnection(i);
+            }
+        }
+
+        System.out.println(count);
+    }
+
+    static void findConnection(int s) {
+        if(visited[s]) return;
+
+        Queue<Integer> q = new LinkedList<>();
+        q.add(s);
+        visited[s] = true;
+
+        while(!q.isEmpty()) {
+            int temp = q.poll();
+
+            for(int next : tree[temp]) {
+                if(visited[next]) continue;
+
+                q.add(next);
+                visited[next] = true;
+            }
+        }
+    }
 }
