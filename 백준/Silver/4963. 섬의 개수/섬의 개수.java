@@ -10,6 +10,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
 
         while(true) {
             StringTokenizer st = new StringTokenizer(br.readLine());
@@ -37,26 +38,25 @@ public class Main {
                 }
             }
 
-            System.out.println(count);
-
+            sb.append(count).append("\n");
         }
+
+        System.out.println(sb);
     }
 
-    static void dfs(int[][] land, int i, int j, int w, int h) {
-        if(land[i][j] == 0) return;
+    static void dfs(int[][] land, int x, int y, int w, int h) {
+        if(land[x][y] == 0) return;
 
-        land[i][j] = 0;
-        for(int x =0; x<8; x++) {
-            for(int y=0; y<8; y++) {
-                int tempX = i+dx[x];
-                int tempY = j+dy[y];
+        land[x][y] = 0;
+        for(int i =0; i<8; i++) {
+            int tempX = x+dx[i];
+            int tempY = y+dy[i];
 
-                if(tempX<1 || tempX>h ||tempY<1 || tempY>w) continue; // 범위에서 넘어가는 경우
+            if(tempX<1 || tempX>h ||tempY<1 || tempY>w) continue; // 범위에서 넘어가는 경우
 
-                if(land[tempX][tempY]==0) continue;
+            if(land[tempX][tempY]==0) continue;
 
-                dfs(land, tempX, tempY, w, h);
-            }
+            dfs(land, tempX, tempY, w, h);
         }
     }
 }
