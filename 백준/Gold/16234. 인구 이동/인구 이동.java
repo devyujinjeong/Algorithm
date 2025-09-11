@@ -33,19 +33,20 @@ public class Main {
         int answer = 0;
         // 가능한 경우가 1개라도 있을 때까지 진행
         while(true) {
-            int count = 0;
+            boolean isMoved= false;
             visited = new boolean[N][N];
 
             for(int i=0; i<N; i++) {
                 for(int j=0; j<N; j++) {
                     if(!visited[i][j]) {
-                        bfs(i,j);
-                        count++; // 만약 count와 N이 같으면 어느 곳이든 방문할 수 없으므로 finish
+                        if(bfs(i,j)){
+                            isMoved = true;
+                        }
                     }
                 }
             }
 
-            if(count == N*N)  break;
+            if(!isMoved) break;
 
             answer++;
         }
@@ -53,15 +54,17 @@ public class Main {
         System.out.println(answer);
     }
 
-    static void bfs(int i, int j) {
+    static boolean bfs(int i, int j) {
         Queue<Node> q1 = new LinkedList<>(); // 인접한 지역을 찾기 위한 queue
         Queue<Node> q2 = new LinkedList<>(); // 인구수 계산을 위한 queue
+
         q1.add(new Node(i,j));
         q2.add(new Node(i,j));
         visited[i][j] = true;
 
         int sum = A[i][j];
         int count = 1;
+
         while(!q1.isEmpty()) {
             Node temp = q1.poll();
             for(int k = 0; k<4; k++) {
@@ -85,9 +88,13 @@ public class Main {
             }
         }
 
+        if(count==1) return false;
+
         for(Node n : q2) {
             A[n.x][n.y] = sum/count;
         }
+
+        return true;
     }
 
     static class Node{
