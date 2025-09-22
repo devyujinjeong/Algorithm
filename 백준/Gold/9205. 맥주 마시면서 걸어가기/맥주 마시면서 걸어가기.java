@@ -7,57 +7,73 @@ import java.util.StringTokenizer;
 
 public class Main {
 
-    static int n;
-    static int[][] map;
+    static Node[] position;
     static boolean[] visited;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
-
         int t = Integer.parseInt(br.readLine());
 
         for(int i=0; i<t; i++) {
-            n = Integer.parseInt(br.readLine());
-            map = new int[n+2][2]; // 출발지, 편의점, 축제 장소 기록
+            int n = Integer.parseInt(br.readLine());
+            position = new Node[n+2];
             visited = new boolean[n+2];
-
-            for(int x=0; x<n+2; x++) {
+            for(int j=0; j<n+2; j++) {
                 StringTokenizer st = new StringTokenizer(br.readLine());
-                for(int y=0; y<2; y++) {
-                    map[x][y] = Integer.parseInt(st.nextToken());
-                }
+                int x = Integer.parseInt(st.nextToken());
+                int y = Integer.parseInt(st.nextToken());
+
+                position[j] = new Node(x,y);
             }
 
-            sb.append(bfs()?"happy":"sad").append("\n");
+            sb.append(bfs(position, n)).append("\n");
         }
 
         System.out.println(sb);
     }
 
-    static boolean bfs() {
-        Queue<Integer> q = new LinkedList<>();
-        q.add(0);
+    static String bfs(Node[] position, int n) {
+        Queue<Node> q = new LinkedList<>();
+        q.add(position[0]);
         visited[0] = true;
 
         while(!q.isEmpty()) {
-            int temp = q.poll();
+            Node temp = q.poll();
 
-            // 축제 장소까지 바로 갈 수 있다면 가능한 경우 (q가 비는 동안 한번도 만족하지 못하면 가지 못한것)
-            if(dist(temp, n+1) <= 1000) return true;
+            // 현재 위치와 페스티벌 위치가 1000이하면 갈 수 있으므로 happy 출력
+            if(findDistance(temp, position[n+1]) <= 1000) return "happy";
 
-            for(int i=1; i<=n; i++) {
-                if(!visited[i] && dist(temp, i) <=1000) { // 아직 방문하지 않았고, 거리도 1000안에 드는 경우
-                    visited[i] = true;
-                    q.add(i);
-                }
+            for(int i=1; i<n+1; i++) {
+                // 현재 위치에서 다음 편의점까지 갈 수 없으면 패스
+                if(findDistance(temp, position[i]) > 1000) continue;
+
+                if(visited[i]) continue;
+
+                q.add(position[i]);
+                visited[i] = true;
             }
         }
 
-        return false;
+        return "sad";
     }
 
-    static int dist(int i, int j) {
-        return Math.abs(map[i][0] - map[j][0]) + Math.abs(map[i][1] - map[j][1]);
+    /* 거리 계산 */
+    static int findDistance(Node n1, Node n2) {
+        int x = Math.abs(n1.x - n2.x);
+        int y = Math.abs(n1.y - n2.y);
+
+        return x+y;
+    }
+
+    /* 위치를 저장하기 위한 Node */
+    static class Node{
+        int x;
+        int y;
+
+        public Node(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
     }
 }
