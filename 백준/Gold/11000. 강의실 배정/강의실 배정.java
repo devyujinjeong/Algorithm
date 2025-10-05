@@ -1,34 +1,36 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.PriorityQueue;
-import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+        int count = 1;
 
-        int n = sc.nextInt();
-        int[][] classes = new int[n][2];
-
-        for (int i = 0; i < n; i++) {
-            classes[i][0] = sc.nextInt();
-            classes[i][1] = sc.nextInt();
+        int[][] classroom = new int[N][2];
+        for(int i=0; i<N; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            classroom[i][0] = Integer.parseInt(st.nextToken());
+            classroom[i][1] = Integer.parseInt(st.nextToken());
         }
 
-        // 시작 시간을 기준으로 정렬하기
-        Arrays.sort(classes, (a, b) -> a[0] - b[0]);
+        Arrays.sort(classroom, (o1, o2) -> o1[0] - o2[0]);
 
-        // 끝나는 시간 정렬
-        PriorityQueue<Integer> classCount = new PriorityQueue<>();
+        PriorityQueue<Integer> pq = new PriorityQueue<>(); // 끝나는 시각 min-heap
+        pq.add(classroom[0][1]);
 
-        classCount.add(classes[0][1]);
-
-        for (int i = 1; i < n; i++) {
-            if (classes[i][0] >= classCount.peek()) {
-            	classCount.poll();
+        for(int i=1; i<N; i++) {
+            if(classroom[i][0] >= pq.peek()) {
+                pq.poll();
             }
-            classCount.add(classes[i][1]);
+            pq.add(classroom[i][1]);
+
         }
 
-        System.out.println(classCount.size());
+        System.out.println(pq.size());
     }
 }
