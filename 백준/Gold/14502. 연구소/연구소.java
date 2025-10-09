@@ -8,12 +8,11 @@ import java.util.StringTokenizer;
 
 public class Main {
 
-    static int N,M;
     static int[][] center;
     static ArrayList<int[][]> arr;
-    static int answer;
-    static int[] dx = {0,0,1,-1};
-    static int[] dy = {1,-1,0,0};
+    static int N, M, max;
+    static int[] dx = {1, -1, 0, 0};
+    static int[] dy = {0, 0, 1, -1};
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -22,9 +21,10 @@ public class Main {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
-        center = new int[N][M];
+        center = new int[N][M]; // 연구소의 크기 설정하기
         arr = new ArrayList<>();
 
+        // 연구소 만들기
         for(int i=0; i<N; i++) {
             st = new StringTokenizer(br.readLine());
             for(int j=0; j<M; j++) {
@@ -34,17 +34,14 @@ public class Main {
 
         findWall(center, 0, 0);
 
-        for(int[][] wall : arr) {
-            int region = findSafeRegion(wall);
-            if(answer < region) answer = region;
+        for(int[][] temp : arr) {
+            int regin = findMax(temp);
+            if(regin>max) max = regin;
         }
 
-        System.out.println(answer);
+        System.out.println(max);
     }
 
-    /**
-    * 벽을 세울 수 있는 모든 경우의 수를 찾아서 arr에 배열 저장하는 메소드
-    * */
     static void findWall(int[][] cur, int depth, int start) {
         if (depth == 3) {
             int[][] copy = new int[N][M];
@@ -53,65 +50,54 @@ public class Main {
             return;
         }
 
-        for (int k = start; k < N * M; k++) {
+        for (int k = start; k < N * M; k++) {   // 조합(중복 방지)
             int i = k / M;
             int j = k % M;
             if (cur[i][j] == 0) {
                 cur[i][j] = 1;
-                findWall(cur, depth + 1, k + 1); 
+                findWall(cur, depth + 1, k + 1); // 다음 칸부터
                 cur[i][j] = 0;
             }
         }
     }
 
-    /**
-    * 안전 지역의 크기를 찾는 메소드
-    * */
-    static int findSafeRegion(int[][] center) {
+    static int findMax(int[][] region) {
         Queue<Node> q = new LinkedList<>();
+        int count = 0;
 
         // 바이러스가 있는 부분을 q에 넣기
         for(int i=0; i<N; i++) {
             for(int j=0; j<M; j++) {
-                if(center[i][j] == 2) {
-                    q.add(new Node(i,j));
-                }
+                if(region[i][j] == 2) q.add(new Node(i,j));
             }
         }
 
-        // 2와 0이 닿아 있는 부분 바이러스 전염시키기
         while(!q.isEmpty()) {
-            Node temp = q.poll();
+            Node cur = q.poll();
             for(int i=0; i<4; i++) {
-                int nx = temp.x + dx[i];
-                int ny = temp.y + dy[i];
+                int nx = cur.x + dx[i];
+                int ny = cur.y + dy[i];
 
-                if(nx<0 || nx>=N || ny<0 || ny>=M) continue; // 범위에서 벗어나지 않게 하기 위함
+                if(nx<0 || nx>=N || ny<0 || ny>=M) continue; // 범위를 벗어난다면 pass
 
-                if(center[nx][ny] !=0 ) continue;
+                if(region[nx][ny] != 0) continue; // 0이 아니면 pass
 
-                center[nx][ny] = 2;
+                region[nx][ny] = 2; // 바이러스 전염 시키기 : 0인 부분을 2로 바꾸기
                 q.add(new Node(nx, ny));
+
             }
         }
 
-        int count = 0;
-        // 0인 영역의 크기 찾기
         for(int i=0; i<N; i++) {
             for(int j=0; j<M; j++) {
-                if(center[i][j] == 0) {
+                if(region[i][j] == 0) {
                     count++;
                 }
             }
         }
-
         return count;
-
     }
 
-    /**
-    * 위치를 저장하기 위한 Node 클래스
-    * */
     static class Node{
         int x;
         int y;
