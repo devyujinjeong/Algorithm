@@ -1,0 +1,24 @@
+SELECT
+    A.CAR_ID,
+    A.CAR_TYPE,
+    -- 할인율이 정수 % (예: 10 → 10%)라고 가정
+    ROUND(A.DAILY_FEE * 30 * (1 - COALESCE(DP.DISCOUNT_RATE, 0) / 100), 0) AS FEE
+FROM CAR_RENTAL_COMPANY_CAR AS A
+JOIN CAR_RENTAL_COMPANY_DISCOUNT_PLAN AS DP
+  ON DP.CAR_TYPE = A.CAR_TYPE
+ AND DP.DURATION_TYPE = '30일 이상'
+WHERE
+      A.CAR_TYPE IN ('세단', 'SUV')
+  -- 2022-11-01 ~ 2022-11-30 기간에 '대여 가능'해야 하므로
+  -- 해당 구간과 '겹치는(rental overlap)' 대여 이력이 없어야 함
+  AND NOT EXISTS (
+        SELECT 1
+        FROM CAR_RENTAL_COMPANY_RENTAL_HISTORY AS H
+        WHERE H.CAR_ID = A.CAR_ID
+          -- [반열림 구간] 겹침 조건: 시작 < 12월 1일 AND 종료 > 11월 1일
+          AND H.START_DATE < '2022-12-01'
+          AND H.END_DATE   > '2022-11-01'
+  )
+  AND (A.DAILY_FEE * 30 * (1 - COALESCE(DP.DISCOUNT_RATE, 0) / 100)) >= 500000
+  AND (A.DAILY_FEE * 30 * (1 - COALESCE(DP.DISCOUNT_RATE, 0) / 100)) <  2000000
+ORDER BY FEE DESC, A.CAR_TYPE ASC, A.CAR_ID DESC;
