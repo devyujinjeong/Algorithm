@@ -1,0 +1,12 @@
+-- 2022년도 한해 평가 점수(상반기 + 하반기)가 가장 높은 사원의 정보 조회
+SELECT 
+    SUM(G.SCORE) AS SCORE,
+    E.EMP_NO,
+    E.EMP_NAME,
+    E.POSITION,
+    E.EMAIL    
+FROM HR_EMPLOYEES E
+JOIN HR_GRADE G ON E.EMP_NO = G.EMP_NO
+GROUP BY E.EMP_NO
+ORDER BY SCORE DESC
+LIMIT 1;
